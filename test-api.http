@@ -1,0 +1,59 @@
+# Archivo de pruebas para REST Client (VSCode) o Postman
+# Puedes importar este archivo en Postman o usarlo con la extensión REST Client de VSCode
+
+@baseUrl = http://localhost:3000
+
+### Obtener todos los productos
+GET {{baseUrl}}/products
+
+### Obtener productos filtrados
+GET {{baseUrl}}/products?query=Miel
+
+### Obtener un producto específico (reemplaza ID por un UUID válido)
+# Primero crea un producto y luego usa su UUID aquí
+GET {{baseUrl}}/products/12345-abcde
+
+### Obtener productos para el carrito
+POST {{baseUrl}}/products/cart
+Content-Type: application/json
+
+[
+  { "productUuid": "12345-abcde", "amount": 2 },
+  { "productUuid": "67890-fghij", "amount": 3 }
+]
+
+### Crear un nuevo producto (requiere autenticación)
+POST {{baseUrl}}/admin/products
+Content-Type: application/json
+x-auth: admin
+
+{
+  "imageUrl": "https://images.freeimages.com/images/large-previews/567/orange-1327774.jpg",
+  "title": "Naranja",
+  "description": "Naranjas jugosas y frescas",
+  "unit": "pieza",
+  "category": "Fruta",
+  "pricePerUnit": 4.20,
+  "stock": 100
+}
+
+### Actualizar un producto (requiere autenticación)
+# Reemplaza 12345-abcde por el UUID de un producto existente
+PUT {{baseUrl}}/admin/products/12345-abcde
+Content-Type: application/json
+x-auth: admin
+
+{
+  "imageUrl": "https://images.freeimages.com/images/large-previews/567/orange-1327774.jpg",
+  "title": "Naranja Valencia",
+  "description": "Naranjas jugosas de la variedad Valencia",
+  "unit": "pieza",
+  "category": "Fruta",
+  "pricePerUnit": 4.50,
+  "stock": 80
+}
+
+### Eliminar un producto (requiere autenticación)
+# Reemplaza 12345-abcde por el UUID de un producto existente
+DELETE {{baseUrl}}/admin/products/12345-abcde
+x-auth: admin
